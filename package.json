@@ -1,0 +1,38 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "server": "nodemon index",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pro100Dmitriy/node-express-mongo.git"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "mongo"
+  ],
+  "author": "Dmitry Shestak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pro100Dmitriy/node-express-mongo/issues"
+  },
+  "homepage": "https://github.com/Pro100Dmitriy/node-express-mongo#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.2",
+    "concurrently": "^7.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15"
+  }
+}

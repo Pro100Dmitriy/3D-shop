@@ -1,0 +1,82 @@
+@import '../../styles/_variables'
+    
+/* Link Button */
+.link-button
+    background: $light
+    ffont-family: Jost
+    font-style: normal
+    font-weight: 500
+    font-size: 10px
+    line-height: 21px
+    text-transform: uppercase
+    text-decoration: none
+    padding: 5px 28px !important
+    box-sizing: border-box
+    display: inline-block !important
+    position: relative
+    transition: all 0.4s ease
+    border: 1px solid white
+    cursor: pointer
+    span
+        position: relative
+        color: $dark
+        z-index: 2
+    &::before
+        content: ''
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background: black
+        transition: transform 0.35s ease
+        z-index: 1
+        transform-origin: 100% 50%
+        transform: scale3d(0,1,1)
+        transition-timing-function: cubic-bezier(.25,.46,.45,.94)
+    &:hover
+        span
+            color: $light !important
+        &::before
+            transform-origin: 0% 50%
+            transform: scale3d(1,1,1)
+/*****************************/
+
+/* Close Button */
+.close-button
+    position: relative
+    display: block
+    width: 11px
+    height: 11px
+    border: none
+    outline: none
+    background: none
+    cursor: pointer
+    &::before
+        content: ''
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate( -50%, -50% ) rotate( 45deg )
+        width: 100%
+        height: 2px
+        background: $light
+        transition: all 0.35s ease
+    &::after
+        content: ''
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate( -50%, -50% ) rotate( -45deg )
+        width: 100%
+        height: 2px
+        background: $light
+        transition: all 0.35s ease
+    &:hover
+        &::before
+            transform: translate( -50%, -50% ) rotate( 0deg )
+        &::after
+            transform: translate( -50%, -50% ) rotate( 0deg )
+        
+
+/*****************************/

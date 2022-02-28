@@ -1,0 +1,75 @@
+.start
+    width: 100vw
+    height: 100vh
+    overflow: hidden
+    position: relative 
+    background: black
+    &__container
+        display: flex
+        flex-direction: row
+        transform-origin: center
+        transform: scale( 1.5 ) rotate( 15deg )
+        &__item
+            width: 50%
+            height: 100vh
+            overflow: hidden
+            position: relative
+            .black-box
+                position: absolute
+                background: black
+                width: 100%
+                height: 100%
+                z-index: 10
+            // Togget class
+            .hover
+                img
+                    transform: translate( -50%, -50% ) scale( 1.1 ) !important
+                    filter: grayscale(0%) !important
+                .item-content__text
+                    top: 50%
+                    opacity: 1
+            .overlay
+                &::before
+                    opacity: 1 !important
+            // Togget class
+            .item-content
+                width: 100%
+                height: 100vh
+                transform-origin: center
+                transform: rotate( -15deg ) scale(1.3)
+                position: relative
+                &::before
+                    content: ''
+                    position: absolute
+                    top: 50%
+                    left: 50%
+                    transform: translate( -50%, -50% )
+                    background: rgba( black, 0.5 )
+                    width: 100%
+                    height: 100%
+                    z-index: 3
+                    opacity: 0
+                    transition: all 0.4s ease-in-out
+                img
+                    position: absolute
+                    top: 50%
+                    left: 50%
+                    transform-origin: center
+                    transform: translate( -50%, -50% )
+                    width: 100%
+                    z-index: 1
+                    transition: all 1s ease
+                    transition-timing-function: cubic-bezier( 0.35, 0.26, 0.58, 1.02 )
+                    filter: grayscale(100%)
+                &__text
+                    position: absolute
+                    top: 50%
+                    transform: translateY( -50% )
+                    z-index: 2
+                    top: 60%
+                    opacity: 0
+                    transition: all 0.4s ease-in-out
+                .text-left
+                    left: 51%
+                .text-right
+                    right: 60%

@@ -1,0 +1,106 @@
+@import '../../styles/_variables'
+@import '../../styles/_mixin'
+    
+.prod
+    text-decoration: none
+    &__block
+        a, p, h4
+            color: $dark
+        &__image
+            width: 456px
+            height: 456px
+            overflow: hidden
+            position: relative
+            .media-wrapper
+                &__mask
+                    position: absolute
+                    top: 0
+                    width: 100%
+                    height: 100%
+                    z-index: 10
+                    background: $dark
+                &__menu
+                    position: absolute
+                    top: 22px
+                    left: 22px
+                    z-index: 3
+                    .like-button
+                        width: 34px
+                        height: 34px
+                        border: none
+                        display: flex
+                        align-items: center
+                        justify-content: center
+                        background: none
+                        backdrop-filter: blur( 10px ) brightness( 1.5 )
+                        opacity: 0
+                        transition: all 0.3s ease
+                        svg
+                            path
+                                fill: $dark
+                        &:hover
+                            background: $dark
+                            svg
+                                path
+                                    fill: $light
+                    .quick-view-button
+                        border: none
+                        width: 34px
+                        height: 34px
+                        display: flex
+                        align-items: center
+                        justify-content: center
+                        background: none
+                        backdrop-filter: blur( 10px ) brightness( 1.5 )
+                        opacity: 0
+                        transition: all 0.3s ease
+                        svg
+                            path
+                                fill: $dark
+                        &:hover
+                            background: $dark
+                            svg
+                                path
+                                    fill: $light
+                picture
+                    .picture__first
+                        @include position-center(2)
+                        transition: all 0.3s ease
+                    .picture__second
+                        @include position-center(1)
+                        transition: all 0.3s ease
+        &__caption
+            .caption
+                &__header
+                    &>h4
+                        margin: 9px 0
+                        transition: all 0.3s ease
+                        transition-delay: 0
+                &__content
+                    &__price
+                        display: flex
+                        transition: all 0.3s ease
+                        transition-delay: 0.1s
+                        .title
+                            margin-right: 3px
+                        .number
+    &:hover
+        .media-wrapper
+            &__menu
+                .like-button
+                    opacity: 1
+                .quick-view-button
+                    opacity: 1
+            picture
+                .picture__first
+                    transform: translate( -50%, -50% ) scale( 1.2 )
+                    opacity: 0
+                .picture__second
+                    transform: translate( -50%, -50% ) scale( 1.1 )
+        .caption
+            &__header
+                &>h4
+                    margin-left: 15px
+            &__content
+                &__price
+                    margin-left: 15px

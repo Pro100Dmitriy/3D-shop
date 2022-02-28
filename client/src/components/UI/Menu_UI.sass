@@ -1,0 +1,88 @@
+.black-white-devider
+    width: 100%
+    height: 0px
+
+
+/* Menu Icon */
+.menu-icon-active
+    .menu-icon
+        &::before
+            transform: rotate( -45deg ) !important
+            width: calc( 18px * 1.414214 ) !important
+            background: black !important
+        span
+            opacity: 0 !important
+        &::after
+            transform: rotate( 45deg ) !important
+            width: calc( 18px * 1.414214 ) !important
+            background: black !important
+
+.menu-icon
+    position: relative
+    width: 20px
+    height: 18px
+    background: none
+    border: none
+    outline: none
+    cursor: pointer
+    &::before
+        content: ''
+        position: absolute
+        left: 0
+        top: 0
+        display: block
+        width: 100%
+        height: 2px
+        background: white
+        transition: all 0.35s ease
+        transform-origin: 100% 50%
+    span
+        display: block
+        width: 100%
+        height: 2px
+        background: white
+        position: absolute
+        left: 0
+        top: 50%
+        transform: translateY( -50% )
+        transition: all 0.35s ease
+    &::after
+        content: ''
+        position: absolute
+        left: 0
+        top: 100%
+        display: block
+        width: 100%
+        height: 2px
+        background: white
+        transition: all 0.35s ease
+        transform-origin: 100% 50%
+        transform: translateY( -2px ) 
+    &:hover
+        &::before
+            background: grey
+        span
+            background: grey
+        &::after
+            background: grey
+/*****************************/
+
+
+.c-clip-element
+    position: absolute
+    top: 0
+    left: 0px
+    right: 0px
+    overflow: hidden
+    bottom: 0!important
+    .is-black
+        z-index: 2
+    .is-white
+        z-index: 1
+    .clip-header
+        .clip-inner
+            overflow: hidden !important
+            .c-navigation
+                display: block
+                writing-mode: vertical-rl
+                transform-origin: center

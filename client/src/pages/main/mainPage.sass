@@ -1,0 +1,236 @@
+@import '../../styles/_variables'
+@import '../../styles/_mixin'
+    
+.black-box
+    position: fixed
+    bottom: 0
+    left: 0
+    width: 100vw
+    height: 0vh
+    background: $dark
+    z-index: 10000
+
+
+.slider
+    width: 100%
+    height: 1000px
+    overflow: hidden
+    position: relative
+    .navigation
+        @include set-pos( 2, 50%, 116px )
+        position: absolute
+        top: 50%
+        left: 116px
+        transform: translateY( -50% )
+        color: $light
+        &__list
+            &__item
+                cursor: pointer
+                .active
+                    opacity: 1
+                    padding-left: 0
+                    &:hover
+                        padding-left: 0
+                p
+                    transition: all 0.35s ease
+                    opacity: 0.4
+                    padding-left: 10px
+                    &:hover
+                        padding-left: 0
+    .slick-slide
+        height: 1000px
+    .carousel
+        &__item
+            width: 100vw
+            height: 1000px
+            overflow: hidden
+            position: relative
+            color: $light
+            &__image
+                .carousel-img
+                    @include set-pos( 1, 50%, 50% )
+                    width: 100%
+            &__caption
+                position: absolute
+                top: 212px
+                right: 100px
+                left: auto
+                bottom: auto
+                z-index: 2
+                text-align: left
+                width: 1408px
+                float: right
+                &__container
+                    &>h2
+                        max-width: 833px
+                    p
+                        max-width: 575px
+                        margin: 52px 0
+
+
+
+.category
+    &__list
+        display: flex
+        &__item
+            width: calc( 100vw / 4 )
+            height: calc( 100vw / 4 )
+            overflow: hidden
+            cursor: pointer
+            position: relative
+            &:hover
+                .media__image
+                    transform: translate( -50%, -50% ) scale( 1.15 )
+                &>h3
+                    opacity: 1
+                    top: 50%
+            .media
+                width: 100%
+                height: 100%
+                &__wrapper
+                    position: absolute
+                    top: 0
+                    width: 100%
+                    height: 100%
+                    background: $dark
+                    display: block
+                    z-index: 3
+                &__image
+                    @include position-center(1)
+                    transition: all 0.35s ease-out
+            &>h3
+                position: absolute
+                top: 60%
+                left: 50%
+                transform: translate( -50%, -50% )
+                z-index: 2
+                opacity: 0
+                color: $light
+                transition: all 0.35s ease
+
+
+
+.product
+    padding: 210px 0
+    &::after
+        height: 0
+        clear: both
+        font-size: 0
+        content: "\A"
+        display: block
+        visibility: hidden
+    .site-container
+        max-width: 1508px
+        margin-right: 0
+        overflow: hidden
+    &__title
+        margin-bottom: 56px
+        display: flex
+        flex-direction: row
+        align-items: center
+        justify-content: space-between
+        max-width: 1408px
+        margin-right: 100px
+        &__controllers
+            .slider-prev
+                display: inline-flex
+                align-items: center
+                cursor: pointer
+                height: 24px
+            .slider-next
+                display: inline-flex
+                align-items: center
+                margin-left: 26px
+                cursor: pointer
+                height: 24px
+    &__slider
+        width: 1884px
+
+
+
+.magic
+    overflow: hidden
+    display: block
+    width: 100%
+    .full-container
+        float: right
+
+
+
+.reviews
+    display: block
+    width: 100%
+    padding: 210px 0 160px 0
+    &::after
+        height: 0
+        clear: both
+        font-size: 0
+        content: "\A"
+        display: block
+        visibility: hidden
+    .section__tittle
+        &>h2
+            margin-bottom: 37px
+    &__slider
+        margin-bottom: 50px
+        .reviews__list
+            &__item
+                padding-right: 17%
+    &__slider-controller
+        display: flex
+        flex-direction: row
+        align-items: center
+        .slider-prev
+            transform: scaleX( -1 )
+        .counter
+            display: block
+            margin-right: 30px
+            margin-left: 30px
+
+
+
+.instruction
+    display: block
+    width: 100%
+    padding: 160px 0 210px 0
+    background: $dark
+    color: $light
+    &::after
+        height: 0
+        clear: both
+        font-size: 0
+        content: "\A"
+        display: block
+        visibility: hidden
+    &__wrapper
+        display: flex
+        flex-direction: row
+        &__left
+            .wrapper-left
+                position: relative
+                width: 574px
+                height: 945px
+                overflow: hidden
+                &__mask
+                    position: absolute
+                    top: 0
+                    left: 0
+                    z-index: 2
+                    background: $dark
+                    width: 100%
+                    height: 100%
+                &__video
+                    @include set-pos( 1, 50%, 50% )
+                    width: 100%
+                    height: auto
+        &__right
+            padding-left: 139px
+            .section__tittle
+                margin-bottom: 91px
+            .right-content
+                &__list
+                    .list-item
+                        position: relative
+                        margin-bottom: 24px
+                        &__numb
+                            @include set-pos( 1, 12px, -15px )

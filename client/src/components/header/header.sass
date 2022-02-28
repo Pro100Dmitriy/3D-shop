@@ -1,0 +1,182 @@
+@import '../../styles/_variables'
+    
+.header
+    position: fixed
+    z-index: 1001
+    &__top
+        position: fixed
+        top: 0
+        right: 100px
+        margin-right: 100px
+        &__button
+            position: relative
+            .c-button-element
+                transform: translateY( 35px ) translateX(0)
+                .is-black
+                    .button-el-clip
+                        .button-enter-el
+                            background: black
+                            border: 1px solid black
+                            span
+                                color: white
+                            &::before
+                                background: white
+                            &:hover
+                                span
+                                    color: black !important
+                .is-white
+                    .button-el-clip
+                        .button-enter-el
+                            background: white
+                            border: 1px solid white
+                            span
+                                color: black
+                            &::before
+                                background: black
+                            &:hover
+                                span
+                                    color: white !important
+                .clip-inner
+                    width: 121.61px
+                    .c-navigation
+                        writing-mode: horizontal-tb
+                        .button-el-clip
+                            .button-enter-el
+    .hide-news
+        transform: translateX( -31px )
+    &__left
+        position: relative
+        top: 0
+        left: 0
+        width: 91px
+        height: 100vh
+        transition: all 0.35s ease
+        &__news
+            position: absolute
+            top: 0
+            left: 0
+            width: 31px
+            height: 100%
+            background: $red
+            .news-text__block
+                position: relative
+                width: 100%
+                height: 100%
+                &__container
+                    position: absolute
+                    top: 50%
+                    left: 50%
+                    transform: translate( -50%, -50% )
+                    width: 100%
+                    height: 80%
+                    overflow: hidden
+                    &__relative
+                        position: relative
+                        width: 100%
+                        height: 100%
+                        transform: rotate( 180deg )
+                        .news-text
+                            position: absolute
+                            top: 50%
+                            left: 50%
+                            transform: translate( -50%, -50% )
+                            margin: 0
+                            padding: 0
+                            transform-origin: center
+                            writing-mode: vertical-rl
+                            color: $light
+                .news-close
+                    position: absolute
+                    bottom: 35px
+                    left: 50%
+                    transform: translateX( -50% )
+        &__menu
+            position: absolute
+            top: 0
+            right: 0
+            width: 60px
+            height: 100%
+            padding: 0
+            margin: 0
+            box-sizing: border-box
+            .menu__block
+                position: relative
+                width: 100%
+                height: 100%
+                .c-logo-element
+                    transform: translateY( 35px ) translateX(0)
+                    .is-black
+                        .logo-el-clip
+                            .logo-enter-el
+                                path
+                                    fill: black !important
+                    .is-white
+                        .logo-el-clip
+                            .logo-enter-el
+                                path
+                                    fill: white !important
+                    .clip-inner
+                        .c-navigation
+                            transform: rotate( 0deg)
+                            .logo-enter-el
+                                width: 24px
+                                margin-left: 18px
+                .c-menu-element
+                    transform: translateY(calc(50vh - 10px)) translateX(0)
+                    .is-black
+                        button
+                            &::before
+                                background: black
+                            span
+                                background: black
+                            &::after
+                                background: black
+                    .is-white
+                        button
+                            &::before
+                                background: white
+                            span
+                                background: white
+                            &::after
+                                background: white
+                    .clip-inner
+                        .c-navigation
+                            transform: rotate( 0deg)
+                            .menu-el-clip
+                                width: 60px
+                                display: flex
+                                align-items: center
+                                justify-content: center
+                .c-email-element
+                    transform: translateY(calc(100vh - 116px - 35px)) translateX(0)
+                    .is-black
+                        z-index: 2
+                        a
+                            color: black !important
+                    .is-white
+                        z-index: 1
+                        a
+                            color: white !important
+                    .clip-inner
+                        .c-navigation
+                            transform: rotate(-180deg)
+                            .email-el-clip
+                                width: 60px
+                                display: flex
+                                align-items: center
+                                justify-content: center
+                                a
+                                    text-decoration: none
+
+
+.fullscreen
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100vh
+    background: white
+    z-index: 1000
+    transform-origin: 0% 50%
+    transform: scale3d(0,1,1)
+    transition: transform 0.35s ease
