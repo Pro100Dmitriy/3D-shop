@@ -1,14 +1,22 @@
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { motion } from 'framer-motion'
+
+import { fetchCategory } from '../mainPageSlice'
 
 import '../mainPage.sass'
 
 const Category = () => {
     const categoryList = useSelector( state => state.mainPage.category )
+    const dispatch = useDispatch()
+
+    useEffect( () => {
+        dispatch( fetchCategory() )
+    }, [] )
 
     const render = ( array ) => {
         const newItem = array.map( (item, i) => {
-            const { id, name, imgSrc } = item
+            const { id, title, imgSrc } = item
 
             const transition = {
                 duration: 1,
@@ -55,9 +63,9 @@ const Category = () => {
                             whileInView="onscreen"
                             variants={ imgAnimation }
                             viewport={{ once: true }}
-                            src={ imgSrc } alt={ name } />
+                            src={ imgSrc } alt={ title } />
                     </figure>
-                    <h3 className='h3'>{ name }</h3>
+                    <h3 className='h3'>{ title }</h3>
                 </li>
             )
         } )

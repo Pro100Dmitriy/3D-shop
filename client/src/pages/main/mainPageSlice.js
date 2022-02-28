@@ -1,14 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import useMongoServer from '../../server/MongoServer'
 
 // Slider
 import imgSlide1 from '../../resourse/MainSlide01.jpg'
 import imgSlide2 from '../../resourse/MainSlide02.jpg'
-
-// Category
-import imgCat1 from '../../resourse/Category_01.jpg'
-import imgCat2 from '../../resourse/Category_02.jpg'
-import imgCat3 from '../../resourse/Category_03.jpg'
-import imgCat4 from '../../resourse/Category_04.jpg'
 
 // Product
 import imgProd1 from '../../resourse/Category_01.jpg'
@@ -21,12 +16,7 @@ const initialState = {
         { id: 2, title: 'Second slide label', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', link: './', imgUrl: imgSlide2 },
     ],
     activeSlide: 0,
-    category: [
-        {id: 3, name: 'Jacet', imgSrc: imgCat1},
-        {id: 4, name: 'Shose', imgSrc: imgCat2},
-        {id: 5, name: 'Hoodie', imgSrc: imgCat3},
-        {id: 6, name: 'T-shirt', imgSrc: imgCat4},
-    ],
+    category: [],
     products: [
         {id: 7, title: 'Hoodie Space Edition', price: '80$', thumbnail: [imgProd1, imgProd2]},
         {id: 8, title: 'Hoodie Samurai Edition', price: '120$', thumbnail: [imgProd1, imgProd2]},
@@ -42,6 +32,14 @@ const initialState = {
     ]
 }
 
+export const fetchCategory = createAsyncThunk(
+    'mainPage/fetchCategory',
+    () => {
+        const { getAllCategories } = useMongoServer()
+        return getAllCategories()
+    }
+)
+
 const mainPageSlice = createSlice({
     name: 'mainPage',
     initialState,
@@ -49,6 +47,14 @@ const mainPageSlice = createSlice({
         changeActiveSlide: ( state, action ) => {
             state.activeSlide = action.payload
         }
+    },
+    extraReducers: ( builder ) => {
+        builder
+            .addCase( fetchCategory.pending, state => { console.log( 'category wait' ) } )
+            .addCase( fetchCategory.fulfilled, ( state, action ) => {
+                state.category = action.payload
+            } )
+            .addCase( fetchCategory.rejected, state => { console.log( 'category error' ) } )
     }
 })
 

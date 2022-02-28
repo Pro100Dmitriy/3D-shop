@@ -10,10 +10,10 @@ const categorySchema = new Schema({
         type: String,
         default: ''
     },
-    user: {
-        ref: 'users',
-        type: Schema.Types.ObjectId
-    }
+    // user: {
+    //     ref: 'users',
+    //     type: Schema.Types.ObjectId
+    // }
 })
 
 module.exports = mongoose.model( 'categories', categorySchema )
