@@ -5,10 +5,6 @@ import useMongoServer from '../../server/MongoServer'
 import imgSlide1 from '../../resourse/MainSlide01.jpg'
 import imgSlide2 from '../../resourse/MainSlide02.jpg'
 
-// Product
-import imgProd1 from '../../resourse/Category_01.jpg'
-import imgProd2 from '../../resourse/Category_02.jpg'
-
 
 const initialState = {
     slider: [
@@ -17,13 +13,7 @@ const initialState = {
     ],
     activeSlide: 0,
     category: [],
-    products: [
-        {id: 7, title: 'Hoodie Space Edition', price: '80$', thumbnail: [imgProd1, imgProd2]},
-        {id: 8, title: 'Hoodie Samurai Edition', price: '120$', thumbnail: [imgProd1, imgProd2]},
-        {id: 9, title: 'Hoodie Black&White Edition', price: '45$', thumbnail: [imgProd1, imgProd2]},
-        {id: 10, title: 'Hoodie / Hyuga Hinata', price: '140$', thumbnail: [imgProd1, imgProd2]},
-        {id: 11, title: 'Hoodie / Dark Side', price: '94$', thumbnail: [imgProd1, imgProd2]},
-    ],
+    products: [],
     reviews: [
         {id: 12, name: 'Dmitry Shestak', message: '“Working with Bornfight has been reassuring and angst-free, qualities that are uncommon in the world of online product development.”'},
         {id: 13, name: 'Dmitry Shestak2', message: '“Working with asdfasf has been reassuring and angst-free, qualities that are uncommon in the world of online product development.”'},
@@ -37,6 +27,15 @@ export const fetchCategory = createAsyncThunk(
     () => {
         const { getAllCategories } = useMongoServer()
         return getAllCategories()
+    }
+)
+
+export const fetchPositions = createAsyncThunk(
+    'mainPage/fetchPositions',
+    () => {
+        const { getAllPositions } = useMongoServer()
+        console.log( getAllPositions() )
+        return getAllPositions()
     }
 )
 
@@ -55,6 +54,12 @@ const mainPageSlice = createSlice({
                 state.category = action.payload
             } )
             .addCase( fetchCategory.rejected, state => { console.log( 'category error' ) } )
+            .addCase( fetchPositions.pending, state => { console.log( 'position wait' ) } )
+            .addCase( fetchPositions.fulfilled, ( state, action ) => {
+                console.log( action.payload )
+                state.products = action.payload
+            } )
+            .addCase( fetchPositions.rejected, state => { console.log( 'position error' ) } )
     }
 })
 

@@ -1,6 +1,8 @@
-import { useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useRef, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
+
+import { fetchPositions } from '../mainPageSlice'
 
 import ProductItem from '../../../components/productItem/ProductItem'
 
@@ -9,8 +11,14 @@ import { ReactComponent as ArrowSvg } from '../../../resourse/icon/Arrow_Right.s
 
 const Products = () => {
     const productList = useSelector( state => state.mainPage.products )
+    const [sliderAvailable, setSliderAvailable] = useState( productList.length > 3 ? true : false )
+    console.log( sliderAvailable )
     const productSlider = useRef( null )
+    const dispatch = useDispatch()
 
+    useEffect( () => {
+        dispatch( fetchPositions() )
+    }, [] )
 
     const render = ( array ) => {
         const items = array.map( (item, i) => {
@@ -35,9 +43,19 @@ const Products = () => {
             fade: false
         }
         return (
-            <Slider ref={ productSlider } {...settings}>
-                { items }
-            </Slider>
+            <>
+                {
+                    sliderAvailable
+                    ?
+                    <Slider ref={ productSlider } {...settings}>
+                        { items }
+                    </Slider>
+                    :
+                    <div className='product__sl-replacer'>
+                        { items }
+                    </div>
+                }
+            </>
         )
     }
 
@@ -57,12 +75,20 @@ const Products = () => {
                 <div className="product__title">
                     <h2 className="h2">New reliazes</h2>
                     <div className="product__title__controllers">
-                        <span
-                            onClick={ prevSlide }
-                            className='slider-prev regular'>Prev</span>
-                        <span
-                            onClick={ nextSlide } 
-                            className='slider-next regular'>Next <ArrowSvg/></span>
+                        {
+                            sliderAvailable
+                            ?
+                            <>
+                                <span
+                                    onClick={ prevSlide }
+                                    className='slider-prev regular'>Prev</span>
+                                <span
+                                    onClick={ nextSlide } 
+                                    className='slider-next regular'>Next <ArrowSvg/></span>
+                            </>
+                            :
+                            ''
+                        }
                     </div>
                 </div>
                 <div className="product__slider">

@@ -6,17 +6,33 @@ const positionSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        default: ''
+    },
     cost: {
         type: Number,
         required: true
+    },
+    sizes: {
+        type: [String],
+        default: []
     },
     category: {
         ref: 'categories',
         type: Schema.Types.ObjectId
     },
-    user: {
-        ref: 'users',
-        type: Schema.Types.ObjectId
+    thumbnail: {
+        type: [String],
+        default: []
+    },
+    image: {
+        type: [String],
+        default: []
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 })
 
