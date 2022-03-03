@@ -1,65 +1,124 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-
-const User = require('../models/User')
+const errorHandler = require("../utils/errorHandler")
+const UserService = require('../service/user-service')
 const keys = require('../config/keys')
 
-module.exports.login = async function( req, res ){
-    const candidate = await User.findOne({
-        email: req.body.email
-    })
+// module.exports.login = async function( req, res ){
+//     const candidate = await User.findOne({
+//         email: req.body.email
+//     })
 
-    if( candidate ){
-        const passwordResult = bcrypt.compareSync( req.body.password, candidate.password )
+//     if( candidate ){
+//         const passwordResult = bcrypt.compareSync( req.body.password, candidate.password )
 
-        if( passwordResult ){
-            const token = jwt.sign({
-                email: candidate.email,
-                userId: candidate._id
-            }, keys.jwt, {
-                expiresIn: 60 * 60
-            })
+//         if( passwordResult ){
+//             const token = jwt.sign({
+//                 email: candidate.email,
+//                 userId: candidate._id
+//             }, keys.jwt, {
+//                 expiresIn: 60 * 60
+//             })
 
-            res.status( 200 ).json({
-                token: `Bearer ${token}`
-            })
-        }else{
-            res.status( 401 ).json({
-                message: 'Incorrent password'
-            })
-        }
-    }else{
-        res.status( 404 ).json({
-            message: 'User not found'
-        })
-    }
-}
+//             res.status( 200 ).json({
+//                 token: `Bearer ${token}`
+//             })
+//         }else{
+//             res.status( 401 ).json({
+//                 message: 'Incorrent password'
+//             })
+//         }
+//     }else{
+//         res.status( 404 ).json({
+//             message: 'User not found'
+//         })
+//     }
+// }
 
 
-module.exports.register = async function( req, res ){
-    const candidate = await User.findOne({
-        email: req.body.email
-    })
+// module.exports.register = async function( req, res ){
+//     const candidate = await User.findOne({
+//         email: req.body.email
+//     })
     
-    if( candidate ){
-        res.status( 409 ).json({
-            message: 'This email is exist'
-        })
-    }else{
+//     if( candidate ){
+//         res.status( 409 ).json({
+//             message: 'This email is exist'
+//         })
+//     }else{
 
-        const salt = bcrypt.genSaltSync(10)
-        const password = req.body.password
-        const user = new User({
-            email: req.body.email,
-            password: bcrypt.hashSync( password, salt )
-        })
+//         const salt = bcrypt.genSaltSync(10)
+//         const password = req.body.password
+//         const user = new User({
+//             email: req.body.email,
+//             password: bcrypt.hashSync( password, salt )
+//         })
 
+//         try{
+//             await user.save()
+//             res.status( 201 ).json( user )
+//         }catch( error ){
+//             // Error
+//         }
+
+//     }
+// }
+
+class AuthController{
+
+    async login( req, res, next ){
         try{
-            await user.save()
-            res.status( 201 ).json( user )
-        }catch( error ){
-            // Error
-        }
 
+        }catch( error ){
+            next( error )
+        }
     }
+
+    async registration( req, res, next ){
+        try{
+            const { email, password } = req.body
+            const userData = await UserService.registration( email, password )
+            res.cookie( 'refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true } )
+            res.status( 200 ).json( userData )
+        }catch( error ){
+            next( error )
+        }
+    }
+
+    async logout( req, res, next ){
+        try{
+
+        }catch( error ){
+            next( error )
+        }
+    }
+
+    async activate( req, res, next ){
+        try{
+            const activationLink = req.params.link
+            await UserService.activate( activationLink )
+            return res.redirect( keys.CLIENT_URL )
+        }catch( error ){
+            next( error )
+        }
+    }
+
+    async refresh( req, res, next ){
+        try{
+
+        }catch( error ){
+            
+        }
+    }
+
+    async getUsers( req, res, next ){
+        try{
+            res.status( 200 ).json({
+                message: 'Is okey'
+            })
+        }catch( error ){
+            next( error )
+        }
+    }
+
 }
+
+module.exports = new AuthController()

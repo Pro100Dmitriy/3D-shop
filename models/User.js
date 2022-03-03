@@ -10,7 +10,14 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    isActivated: {
+        type: String,
+        default: false
+    },
+    activationLink: {
+        type: String
     }
 })
 
-module.exports = mongoose.model( 'users', userSchema )
+module.exports = mongoose.model( 'User', userSchema )

@@ -9,6 +9,7 @@ const categoryRoutes = require('./routes/category')
 const orderRoutes = require('./routes/order')
 const positionRoutes = require('./routes/position')
 const keys = require('./config/keys')
+const errorMiddleware = require('./middleware/error-middleware')
 
 const app = express()
 
@@ -28,6 +29,7 @@ app.use( '/api/category', categoryRoutes )
 app.use( '/api/order', orderRoutes )
 app.use( '/api/position', positionRoutes )
 
+app.use( errorMiddleware )
 
 
 module.exports = app
