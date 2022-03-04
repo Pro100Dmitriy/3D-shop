@@ -1,6 +1,8 @@
 const errorHandler = require("../utils/errorHandler")
 const UserService = require('../service/user-service')
 const keys = require('../config/keys')
+const { validationResult } = require('express-validator')
+const ApiError = require('../exceptions/api-error')
 
 // module.exports.login = async function( req, res ){
 //     const candidate = await User.findOne({
@@ -66,7 +68,11 @@ class AuthController{
 
     async login( req, res, next ){
         try{
-
+            const { email, password } = req.body
+            console.log( 1 )
+            const userData = await UserService.login( email, password )
+            res.cookie( 'refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true } )
+            res.status( 200 ).json( userData )
         }catch( error ){
             next( error )
         }
@@ -74,6 +80,11 @@ class AuthController{
 
     async registration( req, res, next ){
         try{
+            const errors = validationResult( req )
+            if( !errors.isEmpty() ){
+                return next( ApiError.BadRrequest( 'Validation error', errors.array() ) )
+            }
+
             const { email, password } = req.body
             const userData = await UserService.registration( email, password )
             res.cookie( 'refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true } )
@@ -85,7 +96,10 @@ class AuthController{
 
     async logout( req, res, next ){
         try{
-
+            const { refreshToken } = req.cookies
+            const token = await UserService.logout( refreshToken )
+            res.clearCookie( 'refreshToken' )
+            return res.json( token )
         }catch( error ){
             next( error )
         }
@@ -103,7 +117,10 @@ class AuthController{
 
     async refresh( req, res, next ){
         try{
-
+            const { refreshToken } = req.cookies
+            const userData = await UserService.refresh( refreshToken )
+            res.cookie( 'refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true } )
+            res.status( 200 ).json( userData )
         }catch( error ){
             
         }
@@ -111,9 +128,8 @@ class AuthController{
 
     async getUsers( req, res, next ){
         try{
-            res.status( 200 ).json({
-                message: 'Is okey'
-            })
+            const users = await UserService.getAllUsers()
+            return res.json( users )
         }catch( error ){
             next( error )
         }
