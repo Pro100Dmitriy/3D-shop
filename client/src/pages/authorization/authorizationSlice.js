@@ -1,16 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import AuthService from '../../services/AuthService'
+import axios from 'axios'
+import { API_URL } from '../../http'
+
 
 const initialState = {
     isLogin: true,
     user: null,
-    isLoading: true
+    isLoading: true,
+    isError: false
 }
 
 export const authLogin = createAsyncThunk(
     'authorizationPage/authLogin',
     (  { email, password } ) => {
         const response = AuthService.login( email, password )
+                            .then( res => {
+                                localStorage.setItem( 'token', res.data.accessToken )
+                                return res.data
+                            } )
         return response
     }
 )
@@ -19,18 +27,34 @@ export const authRegistration = createAsyncThunk(
     'authorizationPage/authRegistration',
     ( { email, password } ) => {
         const response = AuthService.registration( email, password )
-        // localStorage.setItem( 'token', response.data.accessToken )
-        return response.data
+                            .then( res => {
+                                localStorage.setItem( 'token', res.data.accessToken )
+                                return res.data
+                            } )
+        return response
+    }
+)
+
+export const authLogout = createAsyncThunk(
+    'authorization/authLogout',
+    () => {
+        AuthService.logout().then( res => { localStorage.removeItem( 'token' ) } )
+        return null
     }
 )
 
 export const checkAuth = createAsyncThunk(
     'authorizationPage/checkAuth',
     () => {
-        //const response = AuthService.
+        const response = axios.get( `${API_URL}/auth/refresh`, {withCredentials: true} )
+                            .then( res => {
+                                localStorage.setItem( 'token', res.data.accessToken )
+                                return res.data
+                            } )
+        return response
     }
-
 )
+
 
 const authorizationSlice = createSlice({
     name: 'authorizationPage',
@@ -42,18 +66,46 @@ const authorizationSlice = createSlice({
     },
     extraReducers: ( builder ) => {
         builder
-            .addCase( authLogin.pending, state => { console.log( 'wait login' ) } )
+            // Login
+            .addCase( authLogin.pending, state => { state.isLoading = true } )
             .addCase( authLogin.fulfilled, ( state, action ) => {
-                console.log( action.payload.data )
-                state.user = action.payload.data
-            } )
-            .addCase( authLogin.rejected, state => { console.log( 'login error' ) } )
-            .addCase( authRegistration.pending, state => { console.log( 'wait registration' ) } )
-            .addCase( authRegistration.fulfilled, ( state, action ) => {
-                console.log( action.payload )
+                state.isLoading = false
                 state.user = action.payload
             } )
-            .addCase( authRegistration.rejected, state => { console.log( 'registration error' ) } )
+            .addCase( authLogin.rejected, state => {
+                state.isLoading = false
+                state.isError = true
+            } )
+            // Registration
+            .addCase( authRegistration.pending, state => { state.isLoading = true } )
+            .addCase( authRegistration.fulfilled, ( state, action ) => {
+                state.isLoading = false
+                state.user = action.payload
+            } )
+            .addCase( authRegistration.rejected, state => {
+                state.isLoading = false
+                state.isError = true
+            } )
+            // Logout
+            .addCase( authLogout.pending, state => { state.isLoading = true } )
+            .addCase( authLogout.fulfilled, ( state, action ) => {
+                state.isLoading = false
+                state.user = action.payload
+            } )
+            .addCase( authLogout.rejected, state => {
+                state.isLoading = false
+                state.isError = true
+            } )
+            // Refresh
+            .addCase( checkAuth.pending, state => { state.isLoading = true } )
+            .addCase( checkAuth.fulfilled, ( state, action ) => {
+                state.isLoading = false
+                state.user = action.payload
+            } )
+            .addCase( checkAuth.rejected, state => {
+                state.isLoading = false
+                state.isError = true
+            } )
     }
 })
 

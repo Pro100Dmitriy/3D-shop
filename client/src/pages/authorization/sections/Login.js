@@ -1,9 +1,10 @@
 import { useDispatch } from 'react-redux'
-import { authLogin } from '../authorizationSlice'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
 import '../authorization.sass'
+
+import { authLogin } from '../authorizationSlice'
 
 import InputUI from '../../../components/UI/inputUI/InputUI'
 import { FillButton } from '../../../components/UI/UI'

@@ -1,8 +1,10 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setIsLogin } from './authorizationSlice'
-import { setIsAuthorization } from '../category/categoryPagaSlice'
+
 import './authorization.sass'
+
+import { setIsLogin, checkAuth } from './authorizationSlice'
+import { setIsAuthorization } from '../category/categoryPagaSlice'
 
 import HeaderMini from '../../components/header/HeaderMini'
 import Login from './sections/Login'
@@ -15,6 +17,10 @@ const Authorization = () => {
     const user = useSelector( state => state.authorization.user )
     const authorization = useRef( null )
     const dispatch = useDispatch()
+
+    useEffect( () => {
+        if( localStorage.getItem( 'token' ) ) dispatch( checkAuth() )
+    }, [] )
 
     const middleOn = event => {
         event.preventDefault()
@@ -66,8 +72,17 @@ const Authorization = () => {
                 middleOn={ middleOn }
             />
             <div className="authorization__container">
-                <Login className="authorization__container__login" style={ animationClass.login }/>
-                <Registration className="authorization__container__registration" style={ animationClass.registration }/>
+                {
+                    user
+                    ?
+                    <User className="authorization__container__user"/>
+                    :
+                    <>
+                        <Login className="authorization__container__login" style={ animationClass.login }/>
+                        <Registration className="authorization__container__registration" style={ animationClass.registration }/>
+                    </>
+                }
+                
             </div>
         </section>
     )

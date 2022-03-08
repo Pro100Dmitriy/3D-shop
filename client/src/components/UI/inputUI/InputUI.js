@@ -18,7 +18,7 @@ const Input_UI = ( { label, ...props} ) => {
     }
 
     return (
-        <div className={'login__form__group el-input-group ' + ( focus ? 'el-focus ' : '' ) + ( meta.error ? 'el-error ' : '' ) }>
+        <div className={'login__form__group el-input-group ' +  ( focus ? 'el-focus ' : '' ) + ( meta.touched && meta.error ? 'el-error ' : '' ) }>
             <div className="el-input-group__block">
                 <label
                     className="el-input-group__block__label regular"
