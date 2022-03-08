@@ -42,6 +42,49 @@
             transform: scale3d(1,1,1)
 /*****************************/
 
+/* Link Button */
+.fill-button
+    background: $light
+    font-family: Jost
+    font-style: normal
+    font-weight: 500
+    font-size: 10px
+    line-height: 21px
+    text-transform: uppercase
+    text-decoration: none
+    padding: 5px 28px !important
+    box-sizing: border-box
+    display: inline-block !important
+    position: relative
+    transition: all 0.4s ease
+    border: 1px solid white
+    cursor: pointer
+    span
+        position: relative
+        color: $dark
+        z-index: 2
+    &::before
+        content: ''
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background: black
+        transition: transform 0.35s ease
+        z-index: 1
+        transform-origin: 100% 50%
+        transform: scale3d(0,1,1)
+        transition-timing-function: cubic-bezier(.25,.46,.45,.94)
+    &:hover
+        span
+            color: $light !important
+        &::before
+            transform-origin: 0% 50%
+            transform: scale3d(1,1,1)
+/*****************************/
+
+
 /* Close Button */
 .close-button
     position: relative
@@ -78,5 +121,39 @@
         &::after
             transform: translate( -50%, -50% ) rotate( 0deg )
         
+/*****************************/
 
+
+/* Stroke Button */
+.stroke-link-button
+    font-family: Jost
+    font-style: normal
+    font-weight: normal
+    font-size: 15px
+    line-height: 22px
+    background: none
+    border: none
+    color: $light
+    padding: 0
+    margin: 0
+    position: relative
+    text-decoration: none
+    &::before
+        content: ''
+        position: absolute
+        top: 100%
+        left: 0
+        width: 100%
+        height: 1px
+        background: $light
+        transition: transform 0.35s ease
+        z-index: 1
+        transform-origin: 100% 50%
+        transform: scale3d(0,1,1)
+        transition-timing-function: cubic-bezier(.25,.46,.45,.94)
+    &:hover
+        color: $light
+        &::before
+            transform-origin: 0% 50%
+            transform: scale3d(1,1,1)
 /*****************************/

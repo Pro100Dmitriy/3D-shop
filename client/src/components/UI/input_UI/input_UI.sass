@@ -1,0 +1,42 @@
+@import '../../../styles/_variables'
+@import '../../../styles/_mixin'
+
+.el-focus
+    .el-input-group__block
+        &__label
+            @include set-pos( 2, 0, 10px, 0, -50% )
+            font-size: 12px
+
+.el-error
+    .el-input-group__block
+        &__label
+            color: $red
+        &__input
+            color: $red
+            border-bottom: 1px solid $red
+    .el-input-group__error
+        color: $red    
+
+.el-input-group
+    text-align: left
+    &__block
+        position: relative
+        width: 410px
+        &__label
+            @include set-pos( 2, 50%, 10px, 0, -50% )
+            transition: all 0.3s ease
+        &__input
+            padding: 10px
+            background: none
+            border:
+                left: none
+                right: none
+                top: none
+                bottom: 1px solid $light
+            width: 100%
+            color: $light
+            &:focus
+                outline: none
+    &__error
+        padding-top: 8px
+        font-size: 12px !important
