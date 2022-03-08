@@ -56,7 +56,6 @@ const mainPageSlice = createSlice({
             .addCase( fetchCategory.rejected, state => { console.log( 'category error' ) } )
             .addCase( fetchPositions.pending, state => { console.log( 'position wait' ) } )
             .addCase( fetchPositions.fulfilled, ( state, action ) => {
-                console.log( action.payload )
                 state.products = action.payload
             } )
             .addCase( fetchPositions.rejected, state => { console.log( 'position error' ) } )

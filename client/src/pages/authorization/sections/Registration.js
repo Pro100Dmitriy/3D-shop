@@ -1,48 +1,59 @@
-import '../authorization.sass'
+import { useDispatch } from 'react-redux'
+import { authRegistration } from '../authorizationSlice'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
-import Input_UI from '../../../components/UI/input_UI/Input_UI'
+import '../authorization.sass'
+
+import InputUI from '../../../components/UI/inputUI/InputUI'
 import { FillButton } from '../../../components/UI/UI'
 
 const Registration = (props) => {
+    const dispatch = useDispatch()
+
+    const onSubmit = ( { email, password } ) => {
+        dispatch( authRegistration( { email, password } ) )
+    }
+
     return (
         <div { ...props }>
             <div className="registration">
                 <Formik
                     initialValues={ {
                         email: '',
-                        password: ''
+                        password: '',
+                        confirmPassword: ''
                     } }
                     validationSchema={
                         Yup.object( {
                             email: Yup.string().email('Email is encorrectly!').required('This field is required!'),
                             password: Yup.string().min(6, 'At least 6 letter').required('This field is required!'),
-                            confirmPassword: Yup.string().min(6, 'At least 6 letter').required('This field is required!')
+                            confirmPassword: Yup.string().oneOf( [ Yup.ref( 'password' ) ], 'Passwords don\'t the same!' ).required('This field is required!')
                         } )
                     }
+                    onSubmit={ onSubmit }
                 >
                     <Form className='login__form'>
                         <h2 className="login__form__title menu-main-font">Registration</h2>
-                        <Input_UI
+                        <InputUI
                             label="Email"
                             type="email"
                             name="email"
                             id="email"
                         />
-                        <Input_UI
+                        <InputUI
                             label="Password"
                             type="password"
                             name="password"
                             id="password"
                         />
-                        <Input_UI
+                        <InputUI
                             label="Confirm password"
                             type="password"
                             name="confirmPassword"
                             id="confirmPassword"
                         />
-                        <FillButton disabled className="login__form__submit" type="submit">Login</FillButton>
+                        <FillButton className="login__form__submit" type="submit">Registration</FillButton>
                     </Form>
                 </Formik>
             </div>

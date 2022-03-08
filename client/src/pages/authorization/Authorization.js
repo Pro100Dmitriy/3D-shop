@@ -4,12 +4,15 @@ import { setIsLogin } from './authorizationSlice'
 import { setIsAuthorization } from '../category/categoryPagaSlice'
 import './authorization.sass'
 
+import HeaderMini from '../../components/header/HeaderMini'
 import Login from './sections/Login'
 import Registration from './sections/Registration'
-import HeaderMini from '../../components/header/HeaderMini'
+import User from './sections/User'
+
 
 const Authorization = () => {
     const isLogin = useSelector( state => state.authorization.isLogin )
+    const user = useSelector( state => state.authorization.user )
     const authorization = useRef( null )
     const dispatch = useDispatch()
 

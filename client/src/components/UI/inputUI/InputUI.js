@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Field, ErrorMessage, useField } from 'formik'
+import { useField } from 'formik'
 
-import './input_UI.sass'
+import './inputUI.sass'
 
 const Input_UI = ( { label, ...props} ) => {
     const [ field, meta ] = useField( props )
@@ -16,7 +16,6 @@ const Input_UI = ( { label, ...props} ) => {
             setFocus( false )
         }
     }
-
 
     return (
         <div className={'login__form__group el-input-group ' + ( focus ? 'el-focus ' : '' ) + ( meta.error ? 'el-error ' : '' ) }>

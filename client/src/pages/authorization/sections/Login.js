@@ -1,11 +1,20 @@
-import '../authorization.sass'
+import { useDispatch } from 'react-redux'
+import { authLogin } from '../authorizationSlice'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
-import Input_UI from '../../../components/UI/input_UI/Input_UI'
+import '../authorization.sass'
+
+import InputUI from '../../../components/UI/inputUI/InputUI'
 import { FillButton } from '../../../components/UI/UI'
 
 const Login = (props) => {
+    const dispatch = useDispatch()
+
+    const onSubmit = ( data ) => {
+        dispatch( authLogin( data ) )
+    }
+
     return (
         <div { ...props }>
             <div className="login">
@@ -17,25 +26,26 @@ const Login = (props) => {
                     validationSchema={
                         Yup.object( {
                             email: Yup.string().email('Email is encorrectly!').required('This field is required!'),
-                            password: Yup.string().min(6, 'At least 6 letter').required('This field is required!')
+                            password: Yup.string().min(2, 'At least 6 letter').required('This field is required!')
                         } )
                     }
+                    onSubmit={ onSubmit }
                 >
                     <Form className='login__form'>
                         <h2 className="login__form__title menu-main-font">Login</h2>
-                        <Input_UI
+                        <InputUI
                             label="Email"
                             type="email"
                             name="email"
                             id="email"
                         />
-                        <Input_UI
+                        <InputUI
                             label="Password"
                             type="password"
                             name="password"
                             id="password"
                         />
-                        <FillButton disabled className="login__form__submit" type="submit">Login</FillButton>
+                        <FillButton className="login__form__submit" type="submit">Login</FillButton>
                     </Form>
                 </Formik>
             </div>
