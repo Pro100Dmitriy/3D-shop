@@ -9,6 +9,9 @@ import Products from './sections/MainPage_Products'
 import Magic from './sections/MainPage_Magic'
 import Reviews from './sections/MainPage_Reviews'
 import Instruction from './sections/MainPage_Instruction'
+import NewReliazes from './sections/MainPage_NewReliazes'
+import VisitShop from './sections/MainPage_VisitShop'
+import Footer from '../../components/footer/Footer'
 
 import './mainPage.sass'
 
@@ -52,6 +55,11 @@ const MainPage = () => {
             <Reviews/>
             <To_White_Devider/>
             <Instruction/>
+            <To_Black_Devider/>
+            <NewReliazes/>
+            <VisitShop/>
+            <To_White_Devider/>
+            <Footer/>
         </>
     )
 }

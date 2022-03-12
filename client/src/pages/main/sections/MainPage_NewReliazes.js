@@ -1,17 +1,18 @@
-import { useRef, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useRef, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Slider from 'react-slick'
 
 import { fetchPositions } from '../mainPageSlice'
 
-import ProductItem from '../../../components/productItem/ProductItem'
-
 import '../mainPage.sass'
 import { ReactComponent as ArrowSvg } from '../../../resourse/icon/Arrow_Right.svg'
 
-const Products = () => {
+import ProductItem from '../../../components/productItem/ProductItem'
+
+
+const NewReliazes = (props) => {
     const productList = useSelector( state => state.mainPage.products )
-    const sliderAvailable = useSelector( state => state.mainPage.bigProductSliderAvailabel )
+    const sliderAvailable = useSelector( state => state.mainPage.smallProductSliderAvailabel )
     const productSlider = useRef( null )
     const dispatch = useDispatch()
 
@@ -28,7 +29,8 @@ const Products = () => {
                     title={ title }
                     price={ price }
                     thumbnail={ thumbnail }
-                    delay={ i * 0.1 }/>
+                    delay={ i * 0.1 }
+                    small={ true }/>
             )
         } )
 
@@ -37,7 +39,7 @@ const Products = () => {
             arrows: false,
             infinite: false,
             speed: 500,
-            slidesToShow: 3,
+            slidesToShow: 4,
             slidesToScroll: 1,
             fade: false
         }
@@ -66,10 +68,10 @@ const Products = () => {
         productSlider.current.slickNext()
     }
 
-    const productItems = render( productList )
+    const newProductItems = render( productList )
 
     return (
-        <section className="product">
+        <section className="new-reliazes">
             <div className="site-container">
                 <div className="product__title">
                     <h2 className="h2">New reliazes</h2>
@@ -90,12 +92,12 @@ const Products = () => {
                         }
                     </div>
                 </div>
-                <div className="product__slider">
-                    { productItems }
+                <div className="new-reliazes__slider">
+                    { newProductItems }
                 </div>
             </div>
         </section>
     )
 }
 
-export default Products
+export default NewReliazes

@@ -5,7 +5,7 @@ import { ReactComponent as LikeSvg } from '../../resourse/icon/Like.svg'
 import { ReactComponent as QuickViewSvg } from '../../resourse/icon/Search.svg'
 
 const ProductItem = (props) => {
-    const { key, title, price, thumbnail, delay } = props
+    const { key, title, price, thumbnail, delay, small } = props
 
     const transition = {
         duration: 1,
@@ -25,7 +25,7 @@ const ProductItem = (props) => {
     
     return (
         <a key={ key } href="#" className='prod' >
-            <div className="prod__block">
+            <div className={ "prod__block " + (small ? "prodSmall__block" : "") }>
                 <div className="prod__block__image">
                     <figure className="media-wrapper">
                         <motion.i 

@@ -32,7 +32,7 @@ const Login = (props) => {
                     }
                     onSubmit={ onSubmit }
                 >
-                    <Form className='login__form'>
+                    <Form className="login__form">
                         <h2 className="login__form__title menu-main-font">Login</h2>
                         <InputUI
                             label="Email"

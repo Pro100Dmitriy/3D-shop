@@ -14,6 +14,8 @@ const initialState = {
     activeSlide: 0,
     category: [],
     products: [],
+    bigProductSliderAvailabel: false,
+    smallProductSliderAvailabel: false,
     reviews: [
         {id: 12, name: 'Dmitry Shestak', message: '“Working with Bornfight has been reassuring and angst-free, qualities that are uncommon in the world of online product development.”'},
         {id: 13, name: 'Dmitry Shestak2', message: '“Working with asdfasf has been reassuring and angst-free, qualities that are uncommon in the world of online product development.”'},
@@ -34,7 +36,6 @@ export const fetchPositions = createAsyncThunk(
     'mainPage/fetchPositions',
     () => {
         const { getAllPositions } = useMongoServer()
-        console.log( getAllPositions() )
         return getAllPositions()
     }
 )
@@ -57,6 +58,8 @@ const mainPageSlice = createSlice({
             .addCase( fetchPositions.pending, state => { console.log( 'position wait' ) } )
             .addCase( fetchPositions.fulfilled, ( state, action ) => {
                 state.products = action.payload
+                state.bigProductSliderAvailabel = ( action.payload.length > 3 ) ? true : false
+                state.smallProductSliderAvailabel = ( action.payload.length > 4 ) ? true : false
             } )
             .addCase( fetchPositions.rejected, state => { console.log( 'position error' ) } )
     }
