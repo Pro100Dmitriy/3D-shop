@@ -5,21 +5,20 @@ import { ReactComponent as LikeSvg } from '../../resourse/icon/Like.svg'
 import { ReactComponent as QuickViewSvg } from '../../resourse/icon/Search.svg'
 
 const ProductItem = (props) => {
-    const { key, title, price, thumbnail, delay, small } = props
+    const { key, title, price, thumbnail, inView, delay, small } = props
 
-    const transition = {
+    const transition = delay => ({
         duration: 1,
         ease: [0.87, 0, 0.13, 1],
         delay
-    }
+    })
+
     const wrapperAnimation = {
         offscreen: {
             top: '0%',
-            transition
         },
         onscreen: {
-            top: '-100%',
-            transition
+            top: inView ? '-100%' : '0%',
         }
     }
     
@@ -31,7 +30,9 @@ const ProductItem = (props) => {
                         <motion.i 
                             className='media-wrapper__mask'
                             initial="offscreen"
-                            whileInView="onscreen"
+                            animate="onscreen"
+                            transition={ transition( delay ) }
+                            // whileInView="onscreen"
                             variants={ wrapperAnimation }
                             viewport={{ once: true, amount: 0.8 }}
                         ></motion.i>

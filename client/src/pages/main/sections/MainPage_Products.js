@@ -14,8 +14,15 @@ const Products = () => {
     const sliderAvailable = useSelector( state => state.mainPage.bigProductSliderAvailabel )
     const productSlider = useRef( null )
     const dispatch = useDispatch()
+    const [inView, setInView] = useState(false)
 
     useEffect( () => {
+        document.addEventListener( 'scroll', () => {
+            let sliderCoords = document.querySelector('#new-prod').getBoundingClientRect()
+            if( sliderCoords.top < 400 ){
+                setInView( true )
+            }
+        } )
         dispatch( fetchPositions() )
     }, [] )
 
@@ -28,6 +35,7 @@ const Products = () => {
                     title={ title }
                     price={ price }
                     thumbnail={ thumbnail }
+                    inView={ inView }
                     delay={ i * 0.1 }/>
             )
         } )
@@ -71,8 +79,8 @@ const Products = () => {
     return (
         <section className="product">
             <div className="site-container">
-                <div className="product__title">
-                    <h2 className="h2">New reliazes</h2>
+                <div id="new-prod" className="product__title">
+                    <h2 className="h2">New product</h2>
                     <div className="product__title__controllers">
                         {
                             sliderAvailable

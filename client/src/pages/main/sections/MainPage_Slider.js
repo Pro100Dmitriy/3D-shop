@@ -1,7 +1,8 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeActiveSlide } from '../mainPageSlice'
 import Slider from 'react-slick'
+import { motion, AnimatePresence } from 'framer-motion'
 
 import { LinkButton } from '../../../components/UI/UI'
 
@@ -13,25 +14,90 @@ const SliderMain = () => {
     const dispatch = useDispatch()
     const mainSlider = useRef(null)
 
+    const [isAnimtaing, setIsAnimating] = useState(false)
 
     const render = array => {
-        const items = array.map( slide => {
+        const items = array.map( (slide, indexSlide) => {
             const { id, title, description, link, imgUrl } = slide
 
+            const transition = delay => ({
+                duration: 1,
+                ease: [0.87, 0, 0.13, 1],
+                delay
+            })
+
+            const initial = {
+                position: 'relative',
+                transform: 'translateY( 90px ) translateY( 0px )',
+                opacity: 0,
+            }
+
+            const animate = ( { activeTransform, activeOpacity }) => ({
+                position: 'relative',
+                transform: (activeSlide === indexSlide) ? activeTransform : initial.transform,
+                opacity: (activeSlide === indexSlide) ? activeOpacity : initial.opacity
+            })
+
+            const sliderVariantsAnimation = {
+                initial,
+                animate: animate({
+                    activeTransform: 'translateY( 0px ) translateY( 0px )',
+                    activeOpacity: 1,
+                })
+            }
+
             return (
-                <div key={ id } className='carousel__item'>
-                    <div className="carousel__item__image">
+                <div key={ id } className="a-carousel__item">
+                    <div className="a-carousel__item__image">
                         <img
-                            className="carousel-img"
+                            className="a-carousel-img"
                             src={ imgUrl }
                             alt="First slide"
                         />
                     </div>
-                    <div className='carousel__item__caption'>
-                        <div className="carousel__item__caption__container">
-                            <h2 className="h1">{ title }</h2>
-                            <p className="regular">{ description }</p>
-                            <LinkButton to={ link }>What we do</LinkButton>
+                    <div className='a-carousel__item__caption'>
+                        <div className="a-carousel__item__caption__container">
+                            <div className="a-title-wrapper">
+                                <AnimatePresence initial={ true }>
+                                    <motion.h2 className="title-block">
+                                        <motion.div
+                                            className="a-title a-title-1 h1"
+                                            initial="initial"
+                                            animate="animate"
+                                            transition={ transition( 0.2 ) }
+                                            variants={ sliderVariantsAnimation }
+                                        >Get a proven</motion.div> 
+                                        <motion.div
+                                            className="a-title a-title-2 h1"
+                                            initial="initial"
+                                            animate="animate"
+                                            transition={ transition( 0.3 ) }
+                                            variants={ sliderVariantsAnimation }
+                                        >digital product</motion.div> 
+                                        <motion.div
+                                            className="a-title a-title-3 h1"
+                                            initial="initial"
+                                            animate="animate"
+                                            transition={ transition( 0.4 ) }
+                                            variants={ sliderVariantsAnimation }
+                                        >team</motion.div>
+                                    </motion.h2>
+                                </AnimatePresence>
+                            </div>
+                            <div className="a-description-wrapper">
+                                <AnimatePresence initial={ true }>
+                                    <motion.div 
+                                        className="a-desc"
+                                        initial="initial"
+                                        animate="animate"
+                                        transition={ transition( 0.5 ) }
+                                        variants={ sliderVariantsAnimation }
+                                    >
+                                        <p className="regular">{ description }</p>
+                                        <LinkButton to={ link } className="a-slider-button">What we do</LinkButton>
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,7 +120,7 @@ const SliderMain = () => {
             }
         }
         return (
-            <Slider ref={ mainSlider } {...settings} className="carousel">
+            <Slider ref={ mainSlider } {...settings} className="a-carousel">
                 { items }
             </Slider>
         )
@@ -65,6 +131,7 @@ const SliderMain = () => {
         const index = target.getAttribute('data-index')
         dispatch( changeActiveSlide( index ) )
         mainSlider.current.slickGoTo( index )
+        setIsAnimating(!isAnimtaing)
     }
 
 
@@ -73,9 +140,9 @@ const SliderMain = () => {
             const { title } = item
 
             return (
-                <li className="navigation__list__item">
+                <li className="a-navigation__list__item">
                     <p
-                        className={ i == activeSlide ? "regular active" : "regular" }
+                        className={ i == activeSlide ? "regular a-active" : "regular" }
                         data-index={ i }
                         onClick={ onChangeSlider }
                     >{ title.length > 16 ? `${ title.slice(0, 16) }...` : title.slice(0, 16) }</p>
@@ -84,8 +151,8 @@ const SliderMain = () => {
         } )
 
         return (
-            <div className='navigation'>
-                <ul className="navigation__list">
+            <div className='a-navigation'>
+                <ul className="a-navigation__list">
                     { nav }
                 </ul>
             </div>
@@ -95,7 +162,7 @@ const SliderMain = () => {
     const sliderNavigation = createNavigation( sliderList )
     const sliders = render( sliderList )
     return (
-        <section className="slider">
+        <section className="a-slider">
             { sliderNavigation }
             { sliders }
         </section>

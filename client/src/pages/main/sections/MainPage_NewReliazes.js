@@ -15,8 +15,15 @@ const NewReliazes = (props) => {
     const sliderAvailable = useSelector( state => state.mainPage.smallProductSliderAvailabel )
     const productSlider = useRef( null )
     const dispatch = useDispatch()
+    const [inView, setInView] = useState(false)
 
     useEffect( () => {
+        document.addEventListener( 'scroll', () => {
+            let sliderCoords = document.querySelector('#new-releazes').getBoundingClientRect()
+            if( sliderCoords.top < 400 ){
+                setInView( true )
+            }
+        } )
         dispatch( fetchPositions() )
     }, [] )
 
@@ -29,6 +36,7 @@ const NewReliazes = (props) => {
                     title={ title }
                     price={ price }
                     thumbnail={ thumbnail }
+                    inView={ inView }
                     delay={ i * 0.1 }
                     small={ true }/>
             )
@@ -74,7 +82,7 @@ const NewReliazes = (props) => {
         <section className="new-reliazes">
             <div className="site-container">
                 <div className="product__title">
-                    <h2 className="h2">New reliazes</h2>
+                    <h2 id="new-releazes" className="h2">New reliazes</h2>
                     <div className="product__title__controllers">
                         {
                             sliderAvailable
